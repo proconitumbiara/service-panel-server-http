@@ -22,8 +22,8 @@ app.post('/call', (req, res) => {
     // Se for array, envie cada item para os clientes
     if (Array.isArray(data)) {
         data.forEach(item => {
-            const { nome, guiche, chamadoEm } = item;
-            const payload = JSON.stringify({ nome, guiche, chamadoEm });
+            const { nome, guiche, chamadoEm, prioridade } = item;
+            const payload = JSON.stringify({ nome, guiche, chamadoEm, prioridade });
             wss.clients.forEach(client => {
                 if (client.readyState === WebSocket.OPEN) {
                     client.send(payload);
@@ -32,8 +32,8 @@ app.post('/call', (req, res) => {
         });
     } else {
         // Se for objeto único
-        const { nome, guiche, setor } = data;
-        const payload = JSON.stringify({ nome, guiche, setor });
+        const { nome, guiche, prioridade } = data;
+        const payload = JSON.stringify({ nome, guiche, prioridade });
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
                 client.send(payload);
